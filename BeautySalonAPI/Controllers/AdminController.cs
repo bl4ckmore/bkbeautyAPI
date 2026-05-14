@@ -138,6 +138,50 @@ public class AdminController(AppDbContext db) : ControllerBase
         return NoContent();
     }
 
+
+
+    // PATCH /api/admin/orders/{id}/client  — update clientName + phone
+    [HttpPatch("orders/{id:int}/client")]
+    public async Task<IActionResult> UpdateClient(int id, UpdateClientDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.ClientName))
+            return BadRequest(new { error = "Client name is required." });
+
+        var order = await db.Orders
+            .Include(o => o.Service)
+            .Include(o => o.Stylist)
+            .FirstOrDefaultAsync(o => o.Id == id);
+
+        if (order is null) return NotFound();
+
+        order.ClientName = dto.ClientName.Trim();
+        order.Phone = dto.Phone?.Trim() ?? string.Empty;
+
+        await db.SaveChangesAsync();
+        return Ok(ToDto(order));
+    }
+
+    // PUT /api/admin/stylists/{id}  — update name / email / password
+    [HttpPut("stylists/{id:int}")]
+    public async Task<IActionResult> UpdateStylist(int id, UpdateStylistDto dto)
+    {
+        var stylist = await db.Users.FindAsync(id);
+        if (stylist is null || stylist.Role != "stylist") return NotFound();
+
+        if (await db.Users.AnyAsync(u => u.Email == dto.Email && u.Id != id))
+            return Conflict(new { error = "Email already in use." });
+
+        stylist.Name = dto.Name.Trim();
+        stylist.Email = dto.Email.Trim();
+
+        if (!string.IsNullOrWhiteSpace(dto.Password))
+            stylist.PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password);
+
+        await db.SaveChangesAsync();
+        return Ok(new UserDto(stylist.Id, stylist.Name, stylist.Email, stylist.Role));
+    }
+
+
     // ── Helper ─────────────────────────────────────────────
     private static AdminOrderDto ToDto(Order o) => new(
         o.Id, o.ClientName, o.Phone, o.Service.Name, o.ServiceId,

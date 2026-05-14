@@ -26,7 +26,7 @@ public class OrdersController(AppDbContext db) : ControllerBase
             Date       = dto.Date,
             Time       = dto.Time,
             Notes      = dto.Notes ?? string.Empty,
-            Price      = service.Price,
+            Price = dto.Price ?? service.Price,
         };
 
         db.Orders.Add(order);

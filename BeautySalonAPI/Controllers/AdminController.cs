@@ -1,6 +1,7 @@
 using BeautySalonAPI.Data;
 using BeautySalonAPI.DTOs.Admin;
 using BeautySalonAPI.DTOs.Auth;
+using BeautySalonAPI.DTOs.Orders;
 using BeautySalonAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -179,6 +180,18 @@ public class AdminController(AppDbContext db) : ControllerBase
 
         await db.SaveChangesAsync();
         return Ok(new UserDto(stylist.Id, stylist.Name, stylist.Email, stylist.Role));
+    }
+
+    [HttpPatch("orders/{id:int}/schedule")]
+    public async Task<IActionResult> UpdateSchedule(int id, UpdateScheduleDto dto)
+    {
+        var order = await db.Orders.Include(o => o.Service).Include(o => o.Stylist)
+            .FirstOrDefaultAsync(o => o.Id == id);
+        if (order is null) return NotFound();
+        order.Date = dto.Date;
+        order.Time = dto.Time;
+        await db.SaveChangesAsync();
+        return Ok(ToDto(order));
     }
 
 

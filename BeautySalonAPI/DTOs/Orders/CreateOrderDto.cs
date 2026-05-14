@@ -8,5 +8,6 @@ public record CreateOrderDto(
     [Required] int ServiceId,
     [Required] DateOnly Date,
     [Required] TimeOnly Time,
-    string Notes
+    string Notes,
+    decimal? Price
 );

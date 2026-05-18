@@ -231,3 +231,11 @@ D:\NK\bkbeautyAPI\beautysalonapi\obj\Debug\net8.0\refint\BeautySalonAPI.dll
 D:\NK\bkbeautyAPI\beautysalonapi\obj\Debug\net8.0\BeautySalonAPI.pdb
 D:\NK\bkbeautyAPI\beautysalonapi\obj\Debug\net8.0\BeautySalonAPI.genruntimeconfig.cache
 D:\NK\bkbeautyAPI\beautysalonapi\obj\Debug\net8.0\ref\BeautySalonAPI.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\ClosedXML.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\ClosedXML.Parser.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\ExcelNumberFormat.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\RBush.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\SixLabors.Fonts.dll
+D:\NK\bkbeautyAPI\beautysalonapi\bin\Debug\net8.0\System.IO.Packaging.dll
